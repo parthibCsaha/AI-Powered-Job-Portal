@@ -1,0 +1,43 @@
+# Example application.properties (DO NOT COMMIT real secrets)
+
+spring.application.name=JobPortalApplication
+
+# Server
+server.port=8080
+
+# Database (PostgreSQL)
+spring.datasource.url=jdbc:postgresql://localhost:5432/jobportal
+spring.datasource.username=postgres
+spring.datasource.password=postress_password
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# JPA
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+# JWT
+jwt.secret=REPLACE_WITH_SECURE_RANDOM_STRING_of_min_32_chars
+jwt.expiration=86400000
+jwt.refresh-expiration=604800000
+
+# File uploads
+file.upload-dir=uploads
+spring.servlet.multipart.max-file-size=5MB
+spring.servlet.multipart.max-request-size=5MB
+
+# Mail (optional)
+app.mail.enabled=false
+spring.mail.host=smtp.example.com
+spring.mail.port=587
+spring.mail.username=your-smtp-username
+spring.mail.password=your-smtp-password
+app.mail.from=noreply@example.com
+
+# CORS (comma-separated origins)
+app.cors.allowed-origins=http://localhost:5173
+
+# Groq AI (optional)
+app.ai.groq.api-key=
+app.ai.groq.model=llama-3.3-70b-versatile
+

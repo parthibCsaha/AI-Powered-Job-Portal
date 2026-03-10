@@ -18,7 +18,6 @@ public class UserResponse {
     private String skills;
     private String experience;
     private String education;
-    private String resumeUrl;
 
     // Employer fields
     private String position;

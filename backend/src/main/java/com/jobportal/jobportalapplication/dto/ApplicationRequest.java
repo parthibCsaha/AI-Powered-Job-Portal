@@ -14,5 +14,7 @@ public class ApplicationRequest {
     @NotBlank(message = "Cover letter is required")
     private String coverLetter;
 
-    private String resumeUrl;
+    private String resumeText;
+
+    private Integer aiMatchScore;
 }

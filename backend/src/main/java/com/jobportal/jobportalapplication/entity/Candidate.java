@@ -35,8 +35,6 @@ public class Candidate {
 
     private String location;
 
-    private String resumeUrl;
-
     @Column(length = 1000)
     private String skills;
 

@@ -66,68 +66,91 @@ const Register = () => {
     }
   };
 
+  const inputClasses = "w-full px-4 py-3 bg-slate-800/50 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all";
+  const labelClasses = "block text-gray-300 font-medium mb-2 text-sm";
+
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4">
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-3xl font-bold text-center mb-8">Create Account</h2>
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/20 blur-[120px] animate-float" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/20 blur-[120px] animate-float" style={{ animationDelay: '2s' }} />
+      </div>
+
+      <div className="max-w-2xl w-full glass-card rounded-2xl p-8 shadow-2xl border border-white/10">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-white mb-2">Create Account</h2>
+          <p className="text-gray-400">Join our community of professionals</p>
+        </div>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-xl mb-6 text-sm">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className={labelClasses}>
               I am a
             </label>
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="CANDIDATE" required>Job Seeker</option>
-              <option value="EMPLOYER" required>Employer</option>
-            </select>
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                type="button"
+                onClick={() => handleChange({ target: { name: 'role', value: 'CANDIDATE' } })}
+                className={`p-4 rounded-xl border transition-all ${formData.role === 'CANDIDATE'
+                    ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/25'
+                    : 'bg-slate-800/50 border-white/10 text-gray-400 hover:bg-slate-800'
+                  }`}
+              >
+                <div className="text-lg font-semibold mb-1">Job Seeker</div>
+                <div className="text-xs opacity-80">I'm looking for a job</div>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleChange({ target: { name: 'role', value: 'EMPLOYER' } })}
+                className={`p-4 rounded-xl border transition-all ${formData.role === 'EMPLOYER'
+                    ? 'bg-purple-600 border-purple-500 text-white shadow-lg shadow-purple-500/25'
+                    : 'bg-slate-800/50 border-white/10 text-gray-400 hover:bg-slate-800'
+                  }`}
+              >
+                <div className="text-lg font-semibold mb-1">Employer</div>
+                <div className="text-xs opacity-80">I'm hiring talent</div>
+              </button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Full Name
-              </label>
+              <label className={labelClasses}>Full Name</label>
               <input
                 type="text"
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClasses}
+                placeholder="John Doe"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Email
-              </label>
+              <label className={labelClasses}>Email</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClasses}
+                placeholder="john@example.com"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Password
-              </label>
+              <label className={labelClasses}>Password</label>
               <input
                 type="password"
                 name="password"
@@ -135,73 +158,71 @@ const Register = () => {
                 onChange={handleChange}
                 required
                 minLength="6"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClasses}
+                placeholder="••••••••"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Phone
-              </label>
+              <label className={labelClasses}>Phone</label>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClasses}
+                placeholder="+1 (555) 000-0000"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Location
-            </label>
+            <label className={labelClasses}>Location</label>
             <input
               type="text"
               name="location"
               value={formData.location}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={inputClasses}
+              placeholder="City, Country"
             />
           </div>
 
           {formData.role === 'EMPLOYER' && (
             <>
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Position/Title
-                </label>
-                <input
-                  type="text"
-                  name="position"
-                  value={formData.position}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className={labelClasses}>Position/Title</label>
+                  <input
+                    type="text"
+                    name="position"
+                    value={formData.position}
+                    onChange={handleChange}
+                    required
+                    className={inputClasses}
+                    placeholder="HR Manager"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Company 
-                </label>
-                <select
-                  name="companyId"
-                  value={formData.companyId}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="">Select a company</option>
-                  {companies.map((company) => (
-                    <option key={company.id} value={company.id}>
-                      {company.name}
-                    </option>
-                  ))}
-                </select>
+                <div>
+                  <label className={labelClasses}>Company</label>
+                  <select
+                    name="companyId"
+                    value={formData.companyId}
+                    onChange={handleChange}
+                    required
+                    className={inputClasses}
+                  >
+                    <option value="" className="bg-slate-800">Select a company</option>
+                    {companies.map((company) => (
+                      <option key={company.id} value={company.id} className="bg-slate-800">
+                        {company.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </>
           )}
@@ -209,16 +230,19 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400"
+            className={`w-full py-3 rounded-xl font-semibold text-white shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all ${formData.role === 'EMPLOYER'
+                ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:shadow-purple-500/40'
+                : 'btn-primary hover:shadow-blue-500/40'
+              }`}
           >
-            {loading ? 'Creating Account...' : 'Register'}
+            {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 
-        <p className="text-center mt-6 text-gray-600">
+        <p className="text-center mt-8 text-gray-400 text-sm">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-600 hover:underline">
-            Login here
+          <Link to="/login" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
+            Sign in
           </Link>
         </p>
       </div>

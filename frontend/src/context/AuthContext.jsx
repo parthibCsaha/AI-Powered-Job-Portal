@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       const isExpired = checkTokenExpiration(currentUser.token);
       
       if (isExpired) {
-        console.log('🔐 Token expired on load - clearing');
+        console.log('Token expired on load - clearing');
         localStorage.removeItem('user');
       } else {
         setUser(currentUser);
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
         const isExpired = checkTokenExpiration(currentUser.token);
         
         if (isExpired) {
-          console.log('🔐 Token expired - auto logout');
+          console.log('Token expired - auto logout');
           logout();
           window.location.href = '/login';
         }

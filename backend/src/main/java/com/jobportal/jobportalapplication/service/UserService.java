@@ -57,7 +57,6 @@ public class UserService {
             if (request.getSkills() != null) candidate.setSkills(request.getSkills());
             if (request.getExperience() != null) candidate.setExperience(request.getExperience());
             if (request.getEducation() != null) candidate.setEducation(request.getEducation());
-            if (request.getResumeUrl() != null) candidate.setResumeUrl(request.getResumeUrl());
 
             candidateRepository.save(candidate);
 
@@ -109,7 +108,6 @@ public class UserService {
             response.setSkills(candidate.getSkills());
             response.setExperience(candidate.getExperience());
             response.setEducation(candidate.getEducation());
-            response.setResumeUrl(candidate.getResumeUrl());
 
         } else if (user.getRole() == Role.EMPLOYER && user.getEmployer() != null) {
             Employer employer = user.getEmployer();

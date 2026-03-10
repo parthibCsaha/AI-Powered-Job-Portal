@@ -31,6 +31,8 @@ public class Employer {
     @JoinColumn(name = "company_id")
     private Company company;
 
+    private String fullName;
+
     private String position;
 
     private String phone;

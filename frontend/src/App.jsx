@@ -5,6 +5,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import AIChatWidget from './components/common/AIChatWidget';
 
 // Pages
 import Home from './pages/Home';
@@ -21,17 +22,18 @@ import Applicants from './pages/Applicants';
 import Companies from './pages/Companies';
 import CandidateProfile from './pages/CandidateProfile';
 import EmployerProfile from './pages/EmployerProfile';
+import Notifications from './pages/Notifications';
 import NotFound from './pages/NotFound';
 import Unauthorized from './pages/Unauthorized';
 
-  
+
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <div className="flex flex-col min-h-screen">
           <Header />
-          <main className="grow bg-gray-50">
+          <main className="grow">
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Home />} />
@@ -97,12 +99,23 @@ function App() {
                 }
               />
 
+              {/* Protected Routes - Notifications */}
+              <Route
+                path="/notifications"
+                element={
+                  <ProtectedRoute>
+                    <Notifications />
+                  </ProtectedRoute>
+                }
+              />
+
               {/* Error Routes */}
               <Route path="/unauthorized" element={<Unauthorized />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
           <Footer />
+          <AIChatWidget />
         </div>
       </BrowserRouter>
     </AuthProvider>
@@ -112,7 +125,7 @@ function App() {
 // Dashboard Redirect Component
 const DashboardRedirect = () => {
   const { user } = useAuth();
-  
+
   if (user?.user?.role === 'CANDIDATE') {
     return <CandidateDashboard />;
   } else if (user?.user?.role === 'EMPLOYER') {
@@ -125,7 +138,7 @@ const DashboardRedirect = () => {
 // Profile Redirect Component
 const ProfileRedirect = () => {
   const { user } = useAuth();
-  
+
   if (user?.user?.role === 'CANDIDATE') {
     return <CandidateProfile />;
   } else if (user?.user?.role === 'EMPLOYER') {

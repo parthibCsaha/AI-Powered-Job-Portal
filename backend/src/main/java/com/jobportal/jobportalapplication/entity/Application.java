@@ -33,7 +33,11 @@ public class Application {
     @Column(length = 2000)
     private String coverLetter;
 
-    private String resumeUrl;
+    @Column(columnDefinition = "TEXT")
+    private String resumeText;
+
+    @Column
+    private Integer aiMatchScore;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

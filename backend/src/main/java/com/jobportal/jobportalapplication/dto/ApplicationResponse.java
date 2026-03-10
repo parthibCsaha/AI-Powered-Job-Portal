@@ -16,7 +16,6 @@ public class ApplicationResponse {
     private String candidateName;
     private String candidateEmail;
     private String coverLetter;
-    private String resumeUrl;
     private ApplicationStatus status;
     private LocalDateTime appliedDate;
     private LocalDateTime updatedAt;

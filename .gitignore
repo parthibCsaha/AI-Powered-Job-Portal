@@ -1,0 +1,17 @@
+# IDE
+.idea/
+.vscode/
+*.iws
+*.iml
+*.ipr
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads (user-generated files)
+backend/uploads/
+
+# Environment / secrets
+.env
+*.env

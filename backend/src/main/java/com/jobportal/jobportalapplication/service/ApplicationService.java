@@ -58,8 +58,8 @@ public class ApplicationService {
         application.setJob(job);
         application.setCandidate(candidate);
         application.setCoverLetter(request.getCoverLetter());
-        application.setResumeUrl(request.getResumeUrl() != null ?
-                request.getResumeUrl() : candidate.getResumeUrl());
+        application.setResumeText(request.getResumeText());
+        application.setAiMatchScore(request.getAiMatchScore());
         application.setStatus(ApplicationStatus.PENDING);
 
         application = applicationRepository.save(application);
@@ -158,7 +158,6 @@ public class ApplicationService {
         response.setCandidateName(application.getCandidate().getFullName());
         response.setCandidateEmail(application.getCandidate().getUser().getEmail());
         response.setCoverLetter(application.getCoverLetter());
-        response.setResumeUrl(application.getResumeUrl());
         response.setStatus(application.getStatus());
         response.setAppliedDate(application.getAppliedDate());
         response.setUpdatedAt(application.getUpdatedAt());

@@ -71,10 +71,13 @@ public class AuthService {
             candidate.setFullName(request.getFullName());
             candidate.setPhone(request.getPhone());
             candidate.setLocation(request.getLocation());
-            candidateRepository.save(candidate);
+            candidate = candidateRepository.save(candidate);
+            // Set the bi-directional relationship
+            user.setCandidate(candidate);
         } else if (request.getRole() == Role.EMPLOYER) {
             Employer employer = new Employer();
             employer.setUser(user);
+            employer.setFullName(request.getFullName());
             employer.setPhone(request.getPhone());
             employer.setPosition(request.getPosition());
 
@@ -83,7 +86,9 @@ public class AuthService {
                         .orElseThrow(() -> new BadRequestException("Company not found")));
             }
 
-            employerRepository.save(employer);
+            employer = employerRepository.save(employer);
+            // Set the bi-directional relationship
+            user.setEmployer(employer);
         }
 
         // Authenticate and generate token
@@ -134,10 +139,24 @@ public class AuthService {
         response.setIsActive(user.getIsActive());
 
         if (user.getRole() == Role.CANDIDATE && user.getCandidate() != null) {
-            response.setProfileId(user.getCandidate().getId());
-            response.setFullName(user.getCandidate().getFullName());
+            Candidate candidate = user.getCandidate();
+            response.setProfileId(candidate.getId());
+            response.setFullName(candidate.getFullName());
+            response.setPhone(candidate.getPhone());
+            response.setLocation(candidate.getLocation());
+            response.setSkills(candidate.getSkills());
+            response.setExperience(candidate.getExperience());
+            response.setEducation(candidate.getEducation());
         } else if (user.getRole() == Role.EMPLOYER && user.getEmployer() != null) {
-            response.setProfileId(user.getEmployer().getId());
+            Employer employer = user.getEmployer();
+            response.setProfileId(employer.getId());
+            response.setFullName(employer.getFullName());
+            response.setPhone(employer.getPhone());
+            response.setPosition(employer.getPosition());
+            if (employer.getCompany() != null) {
+                response.setCompanyId(employer.getCompany().getId());
+                response.setCompanyName(employer.getCompany().getName());
+            }
         }
 
         return response;

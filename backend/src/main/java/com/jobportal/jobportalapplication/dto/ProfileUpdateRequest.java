@@ -10,7 +10,6 @@ public class ProfileUpdateRequest {
     private String skills;
     private String experience;
     private String education;
-    private String resumeUrl;
     private String position;
     private Long companyId;
 }

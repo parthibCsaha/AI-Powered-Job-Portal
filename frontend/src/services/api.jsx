@@ -38,7 +38,7 @@ api.interceptors.response.use(
     if ((status === 401 || status === 403) && !isRedirecting) {
       isRedirecting = true;
       
-      console.log('🔐 Token expired - logging out');
+      console.log('Token expired - logging out');
       
       // Clear user data
       localStorage.removeItem('user');
