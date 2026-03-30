@@ -34,6 +34,10 @@ spring.mail.username=your-smtp-username
 spring.mail.password=your-smtp-password
 app.mail.from=noreply@example.com
 
+# Redis
+spring.data.redis.host=localhost
+spring.data.redis.port=6379
+
 # CORS (comma-separated origins)
 app.cors.allowed-origins=http://localhost:5173
 

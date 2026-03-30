@@ -4,11 +4,12 @@ import com.jobportal.jobportalapplication.entity.JobStatus;
 import com.jobportal.jobportalapplication.entity.JobType;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-public class JobResponse {
+public class JobResponse implements Serializable {
     private Long id;
     private String title;
     private String description;

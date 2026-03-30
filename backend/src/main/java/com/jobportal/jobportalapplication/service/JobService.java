@@ -15,6 +15,9 @@ import com.jobportal.jobportalapplication.repo.EmployerRepository;
 import com.jobportal.jobportalapplication.repo.JobRepository;
 import com.jobportal.jobportalapplication.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -37,6 +40,7 @@ public class JobService {
     @Autowired
     private ApplicationRepository applicationRepository;
 
+    @Cacheable(value = "jobs", key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + #pageable.sort")
     public Page<JobResponse> getAllJobs(Pageable pageable) {
         return jobRepository.findAll(pageable).map(this::mapToResponse);
     }
@@ -88,6 +92,7 @@ public class JobService {
         return jobRepository.findAll(spec, pageable).map(this::mapToResponse);
     }
 
+    @Cacheable(value = "jobDetail", key = "#id")
     public JobResponse getJobById(Long id) {
         Job job = jobRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found"));
@@ -95,6 +100,7 @@ public class JobService {
     }
 
     @Transactional
+    @CacheEvict(value = "jobs", allEntries = true)
     public JobResponse createJob(JobRequest request, Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
@@ -122,6 +128,10 @@ public class JobService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "jobs", allEntries = true),
+            @CacheEvict(value = "jobDetail", key = "#id")
+    })
     public JobResponse updateJob(Long id, JobRequest request, Authentication authentication) {
         Job job = jobRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found"));
@@ -152,6 +162,10 @@ public class JobService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "jobs", allEntries = true),
+            @CacheEvict(value = "jobDetail", key = "#id")
+    })
     public void deleteJob(Long id, Authentication authentication) {
         Job job = jobRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found"));

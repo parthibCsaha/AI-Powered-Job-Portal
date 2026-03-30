@@ -2,13 +2,13 @@
 ---
 
 [![Java](https://img.shields.io/badge/Java-17%2B-blue.svg)](https://www.oracle.com/java/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen?logo=spring-boot)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-brightgreen?logo=spring-boot)](https://spring.io/projects/spring-boot)
 [![Maven](https://img.shields.io/badge/Maven-3.8-orange?logo=apachemaven)](https://maven.apache.org/)
 ![LLM](https://img.shields.io/badge/LLM-Groq%20%7C%20LLaMA3-blueviolet)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15%2B-blue?logo=postgresql)](https://www.postgresql.org/)
-[![React](https://img.shields.io/badge/React-18-blue?logo=react)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-4.x-ff69b4?logo=vite)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.x-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
+[![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-7.x-ff69b4?logo=vite)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4.x-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
 
 
 
@@ -385,7 +385,7 @@ sequenceDiagram
 
  #### Backend
 - Java 17
-- Spring Boot 3
+- Spring Boot 3.5
 - Spring Security + JWT
 - Spring Data JPA (Hibernate)
 - PostgreSQL
@@ -393,10 +393,10 @@ sequenceDiagram
 - Maven
   
  #### Frontend
-- React 18
-- Vite
-- Tailwind CSS
-- React Router
+- React 19
+- Vite 7
+- Tailwind CSS 4
+- React Router 7
 - Axios
 
 ---------------------------------------------------------------------------------------------------

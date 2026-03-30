@@ -6,6 +6,9 @@ import com.jobportal.jobportalapplication.entity.Company;
 import com.jobportal.jobportalapplication.exception.ResourceNotFoundException;
 import com.jobportal.jobportalapplication.repo.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,10 +20,12 @@ public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
 
+    @Cacheable(value = "companies", key = "#pageable.pageNumber + '-' + #pageable.pageSize")
     public Page<CompanyResponse> getAllCompanies(Pageable pageable) {
         return companyRepository.findAll(pageable).map(CompanyService::mapToResponse);
     }
 
+    @Cacheable(value = "companyDetail", key = "#id")
     public CompanyResponse getCompanyById(Long id) {
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Company not found"));
@@ -28,6 +33,7 @@ public class CompanyService {
     }
 
     @Transactional
+    @CacheEvict(value = "companies", allEntries = true)
     public CompanyResponse createCompany(CompanyRequest request) {
         Company company = new Company();
         company.setName(request.getName());
@@ -42,6 +48,10 @@ public class CompanyService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "companies", allEntries = true),
+            @CacheEvict(value = "companyDetail", key = "#id")
+    })
     public CompanyResponse updateCompany(Long id, CompanyRequest request) {
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Company not found"));
@@ -69,6 +79,10 @@ public class CompanyService {
         return response;
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "companies", allEntries = true),
+            @CacheEvict(value = "companyDetail", key = "#id")
+    })
     public void deleteCompany(Long id) {
         companyRepository.deleteById(id);
     }

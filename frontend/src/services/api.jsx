@@ -28,23 +28,27 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor - Auto logout on 401/403
+// Response interceptor - handle auth errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     const status = error.response?.status;
     
-    // Token expired or unauthorized
-    if ((status === 401 || status === 403) && !isRedirecting) {
+    if (status === 401 && !isRedirecting) {
+      // Token expired or invalid — log out and redirect to login
       isRedirecting = true;
-      
       console.log('Token expired - logging out');
-      
-      // Clear user data
       localStorage.removeItem('user');
-      
-      // Redirect to login
       window.location.href = '/login';
+    } else if (status === 403 && !isRedirecting) {
+      // Forbidden — user is logged in but doesn't have permission
+      isRedirecting = true;
+      window.location.href = '/unauthorized';
+    }
+
+    // Reset flag after a short delay so future errors are still caught
+    if (isRedirecting) {
+      setTimeout(() => { isRedirecting = false; }, 2000);
     }
     
     return Promise.reject(error);
